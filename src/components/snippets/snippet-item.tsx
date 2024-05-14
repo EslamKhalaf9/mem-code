@@ -10,7 +10,7 @@ interface SnippetItemProps {
 export default function SnippetItem({ snippet }: SnippetItemProps) {
   return (
     <div className="snippet flex justify-between items-center border rounded py-2 px-4">
-      <Link href={`/snippets/${snippet.id}`}>
+      <Link href={`/snippets/${snippet.id.toString()}`}>
         <h2 className="text-xl">{snippet.title}</h2>
       </Link>
       <div className="actions flex gap-2">
