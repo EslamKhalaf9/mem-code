@@ -10,13 +10,10 @@ interface SnippetItemProps {
 export default function SnippetItem({ snippet }: SnippetItemProps) {
   return (
     <div className="snippet flex justify-between items-center border rounded py-2 px-4">
+      <h2 className="text-xl">{snippet.title}</h2>
       <Link href={`/snippets/${snippet.id.toString()}`}>
-        <h2 className="text-xl">{snippet.title}</h2>
+        <Button variant="default">View</Button>
       </Link>
-      <div className="actions flex gap-2">
-        <Button variant={"outline"}>Edit</Button>
-        <Button variant={"destructive"}>Delete</Button>
-      </div>
     </div>
   )
 }

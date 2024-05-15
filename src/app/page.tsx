@@ -1,5 +1,5 @@
 import SnippetList from "@/components/snippets/snippet-list";
-import { db } from "../../db/db";
+import { db } from "@/db/db";
 import { snippets } from "@/db/schema";
 
 export default async function Home() {

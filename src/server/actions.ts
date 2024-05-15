@@ -1,16 +1,11 @@
 'use server';
 
-import { Snippet } from "@/components/snippets/snippet-list";
 import { db } from "@/db/db";
 import { snippets } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-type CreateSnippet = {
-  title: string;
-  code: string;
-  language: string;
-}
 
 export async function createSnippet(formDate: FormData) {
   console.log('createSnippet', formDate);
@@ -27,10 +22,33 @@ export async function createSnippet(formDate: FormData) {
     throw new Error('All fields must be strings');
   }
 
-  db.insert(snippets)
+  await db.insert(snippets)
     .values({ title, code, language })
     .execute();
 
   revalidatePath('/');
+  redirect('/');
+}
+
+export async function editSnippet(id: number, title: string, code: string) {
+  console.log('editSnippet', code);
+
+  await db.update(snippets)
+    .set({ code, title })
+    .where(eq(snippets.id, id))
+    .execute();
+
+  revalidatePath(`/snippets/${id}`);
+  redirect(`/snippets/${id}`);
+}
+
+export async function deleteSnippet(id: number) {
+  console.log('deleteSnippet', id);
+
+  await db.delete(snippets)
+    .where(eq(snippets.id, id))
+    .execute();
+
+  revalidatePath(`/`);
   redirect('/');
 }

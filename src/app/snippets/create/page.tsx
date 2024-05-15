@@ -58,7 +58,7 @@ export default function CreateSnippetPage() {
                 <div className="flex items-center">
                   <Label htmlFor="code">Code</Label>
                 </div>
-                <Input id="code" type="code" name="code" required />
+                <textarea id="code" className="border rounded p-2 w-full" name="code" />
               </div>
               <Button type="submit" className="w-full">
                 Create Snippet
