@@ -50,3 +50,13 @@ export default async function SnippetPage({ params }: SnippetPageProps) {
     </div>
   )
 }
+
+export async function generateStaticParams() {
+  const snippetsData = await db.select()
+    .from(snippets)
+    .execute();
+
+  return snippetsData.map(snippet => ({
+    id: snippet.id.toString()
+  }));
+}
