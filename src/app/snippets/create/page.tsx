@@ -1,3 +1,7 @@
+'use client';
+
+import { useActionState } from "react";
+import Link from "next/link";
 import * as Actions from "@/server/actions"
 
 import { Button } from "@/components/ui/button";
@@ -5,13 +9,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import Link from "next/link";
 
 export default function CreateSnippetPage() {
 
+  const initialState = {
+    message: "",
+  }
+
+  const [state, formAction] = useActionState(Actions.createSnippet, initialState);
+
   return (
     <div className="flex flex-col justify-center items-center h-screen">
-      <form action={Actions.createSnippet}>
+      <form action={formAction}>
         <Card className="mx-auto max-w-sm">
           <CardHeader>
             <CardTitle className="text-2xl">Create a new Snippet</CardTitle>
@@ -28,7 +37,7 @@ export default function CreateSnippetPage() {
                   type="text"
                   name="title"
                   placeholder="Enter the title of the snippet"
-                  required
+                // required
                 />
               </div>
               <div className="grid gap-2">
@@ -60,6 +69,10 @@ export default function CreateSnippetPage() {
                 </div>
                 <textarea id="code" className="border rounded p-2 w-full" name="code" />
               </div>
+              {/* form state message */}
+              {state.message && (
+                <div className="bg-red-200 my-2 p-2 rounded border border-red-400">{state.message}</div>
+              )}
               <Button type="submit" className="w-full">
                 Create Snippet
               </Button>
@@ -72,7 +85,6 @@ export default function CreateSnippetPage() {
           </CardContent>
         </Card>
       </form>
-
     </div>
   )
 }
